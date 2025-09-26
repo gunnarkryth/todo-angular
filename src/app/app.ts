@@ -1,12 +1,38 @@
+import { NgFor } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { log } from 'console';
+
+export interface TodoItem {
+  id: number;
+  task: string;
+  completed: boolean;
+}
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet, FormsModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('to-do-list-angular');
+  todoList: TodoItem[] = [];
+  newTask: string = '';
+
+  addTask(): void {
+    if (this.newTask.trim() !== '') {
+      const newTodoItem: TodoItem = {
+        id: Date.now(),
+        task: this.newTask,
+        completed: false,
+      };
+
+      this.todoList.push(newTodoItem);
+      // console.log(this.todoList);
+      this.newTask = '';
+    }
+  }
+
 }
