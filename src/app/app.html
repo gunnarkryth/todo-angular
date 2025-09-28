@@ -1,21 +1,22 @@
+<!-- Todo App UI -->
 <main class="main">
+  <!-- Input row -->
   <div>
     <input [(ngModel)]="newTask" placeholder="New task..." (keyup.enter)="addTask()" />
     <button type="button" (click)="addTask()">Add</button>
   </div>
-  <ul>
-    @for (todoItem of todoList; track todoItem.id; let i= $index) {
 
+  <!-- Todo list -->
+  <ul>
+    @for (todoItem of todoList; track todoItem.id; let i = $index) {
     <li>
       <input type="checkbox" (change)="toggleCompleted(i)" [checked]="todoItem.completed" />
-      <span [class.completed]="todoItem.completed">
-        {{ todoItem.task }}
-      </span>
+      <span [class.completed]="todoItem.completed">{{ todoItem.task }}</span>
       <button type="button" class="deleteButton" (click)="deleteTask(todoItem.id)">Delete</button>
     </li>
-
     }
   </ul>
 </main>
 
+<!-- Routing outlet -->
 <router-outlet />

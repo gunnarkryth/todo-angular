@@ -1,3 +1,4 @@
+/* Main container */
 .main {
   max-width: 480px;
   display: flex;
@@ -10,12 +11,14 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Input row (text + add button) */
 .main > div {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
 
+/* Text input styling */
 input[type='text'],
 input:not([type]) {
   padding: 0.5rem 0.75rem;
@@ -31,6 +34,7 @@ input:not([type]):focus {
   outline-color: #bcd8ff;
 }
 
+/* Todo list layout */
 ul {
   list-style: none;
   margin: 0.75rem 0 0;
@@ -48,12 +52,14 @@ li {
   border-radius: 8px;
 }
 
+/* Checkbox styling */
 input[type='checkbox'] {
   width: 1rem;
   height: 1rem;
   cursor: pointer;
 }
 
+/* Task text + completed state */
 span {
   flex: 1;
   line-height: 1.3;
@@ -67,6 +73,7 @@ span.completed {
   transition: color 0.2s, opacity 0.2s;
 }
 
+/* Buttons (Add / Delete) */
 button {
   padding: 0.5rem 0.9rem;
   border: none;
@@ -92,6 +99,7 @@ button {
   }
 }
 
+/* Responsive adjustments for very small screens */
 @media (max-width: 360px) {
   .main {
     padding: 0.75rem;
