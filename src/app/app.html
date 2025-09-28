@@ -8,7 +8,7 @@
 
     <li>
       <input type="checkbox" (change)="toggleCompleted(i)" [checked]="todoItem.completed" />
-      <span>
+      <span [class.completed]="todoItem.completed">
         {{ todoItem.task }}
       </span>
       <button type="button" class="deleteButton" (click)="deleteTask(todoItem.id)">Delete</button>
