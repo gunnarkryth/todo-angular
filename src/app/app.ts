@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 export interface TodoItem {
-  id: number;
+  id: string;
   task: string;
   completed: boolean;
 }
@@ -15,29 +15,43 @@ export interface TodoItem {
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnInit {
+  private readonly storageKey = 'todoList';
+
   todoList: TodoItem[] = [];
   newTask: string = '';
 
-  addTask(): void {
-    if (this.newTask.trim() !== '') {
-      const newTodoItem: TodoItem = {
-        id: Date.now(),
-        task: this.newTask,
-        completed: false,
-      };
-
-      this.todoList.push(newTodoItem);
-      this.newTask = '';
+  ngOnInit(): void {
+    try {
+      const storedList = localStorage.getItem(this.storageKey);
+      if (storedList) this.todoList = JSON.parse(storedList) as TodoItem[];
+    } catch (event) {
+      console.error('Failed to load todo list from localStorage:', event);
     }
   }
+
+  private save(): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.todoList));
+  }
+
+  addTask(): void {
+    const task = this.newTask.trim();
+    if (!task) return;
+
+    this.todoList = [...this.todoList, { id: crypto.randomUUID(), task: task, completed: false }];
+    this.newTask = '';
+    this.save();
+  }
+
   toggleCompleted(index: number): void {
     this.todoList = this.todoList.map((item, i) =>
       i === index ? { ...item, completed: !item.completed } : item
     );
+    this.save();
   }
 
-  deleteTask(id: number): void {
+  deleteTask(id: string): void {
     this.todoList = this.todoList.filter((item) => item.id !== id);
+    this.save();
   }
 }
