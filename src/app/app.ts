@@ -1,8 +1,6 @@
-import { NgFor } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { log } from 'console';
 
 export interface TodoItem {
   id: number;
@@ -30,9 +28,16 @@ export class App {
       };
 
       this.todoList.push(newTodoItem);
-      // console.log(this.todoList);
       this.newTask = '';
     }
   }
+  toggleCompleted(index: number): void {
+    this.todoList = this.todoList.map((item, i) =>
+      i === index ? { ...item, completed: !item.completed } : item
+    );
+  }
 
+  deleteTask(id: number): void {
+    this.todoList = this.todoList.filter((item) => item.id !== id);
+  }
 }

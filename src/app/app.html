@@ -4,12 +4,14 @@
     <button type="button" (click)="addTask()">Add</button>
   </div>
   <ul>
-    @for (todoItem of todoList; track todoItem.id) {
+    @for (todoItem of todoList; track todoItem.id; let i= $index) {
 
     <li>
+      <input type="checkbox" (change)="toggleCompleted(i)" [checked]="todoItem.completed" />
       <span>
         {{ todoItem.task }}
       </span>
+      <button type="button" (click)="deleteTask(todoItem.id)">Delete</button>
     </li>
 
     }
